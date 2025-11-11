@@ -1,6 +1,4 @@
 # indonesian food recommendation using LSTM
- 
-Tentu, ini adalah draf `README.md` yang komprehensif berdasarkan file-file yang Anda berikan.
 
 -----
 
