@@ -74,7 +74,7 @@ class FoodRecommendationSystem:
         return ""
 
     def process_text(self, text):
-        """Fungsi ini sekarang melakukan stopword removal DAN stemming."""
+        """Fungsi ini sekarang melakukan stopword removal dan stemming."""
         if isinstance(text, str):
             try:
                 tokens = word_tokenize(text)
@@ -118,7 +118,7 @@ class FoodRecommendationSystem:
             df[f'{col}_cleaned'] = df[col].apply(self.clean_text)
             df[f'{col}_processed'] = df[f'{col}_cleaned'].apply(self.process_text)
     
-        # Kode Baru dengan Pembobotan Judul
+        # Pembobotan Judul
         title_with_weight = (df['title_processed'] + " ") * 2
         df['combined_features'] = title_with_weight + df['ingredients_processed'] + " " + df['steps_processed']
         return df
@@ -149,8 +149,7 @@ class FoodRecommendationSystem:
             print(f"✅ Berhasil menggabungkan {len(all_dfs)} dataset.")
             return concatenated_df
     
-# Di dalam kelas FoodRecommendationSystem
-# Di dalam kelas FoodRecommendationSystem
+
 # Di dalam kelas FoodRecommendationSystem
     def load_processed_data(self, file_path):
         """Memuat data yang sudah diproses dari file CSV."""
@@ -205,7 +204,7 @@ class FoodRecommendationSystem:
     def build_model(self, num_categories):
         print("\nBuilding LSTM model...")
         vocab_size = min(self.max_features, len(self.tokenizer.word_index) + 1)
-       # Kode Baru dengan Stacked LSTM
+       # Arsitektur LSTM
         model = Sequential([
             Embedding(input_dim=vocab_size, output_dim=self.embedding_dim, input_length=self.max_sequence_length),
             # Layer LSTM pertama harus memiliki return_sequences=True
@@ -340,7 +339,7 @@ class FoodRecommendationSystem:
                 scores = manhattan_distances(user_vector.reshape(1, -1), recipe_vectors)[0]
                 top_indices = scores.argsort()[:top_n]
             elif method == 'dot_product':
-                # --- MULAI PERUBAHAN ---
+                # normalisasi nilai dot product
                 # 1. Normalisasi vektor input pengguna
                 user_norm = np.linalg.norm(user_vector)
                 # Hindari pembagian dengan nol jika vektornya kosong
